@@ -1,0 +1,17 @@
+{
+    "tables": [
+      {
+        "source_table": "dbo.source_table_1",
+        "target_table": "public.target_table_1",
+        "query": "SELECT * FROM dbo.source_table_1",
+        "csv_file": "data_export_1.csv"
+      },
+      {
+        "source_table": "dbo.source_table_2",
+        "target_table": "public.target_table_2",
+        "query": "SELECT * FROM dbo.source_table_2",
+        "csv_file": "data_export_2.csv"
+      }
+    ]
+  }
+  

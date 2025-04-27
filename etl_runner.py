@@ -6,7 +6,7 @@ from extract_mssql import extract_from_mssql
 from load_postgres import load_to_postgres
 
 # Load config.json
-with open('config.json', 'r') as f:
+with open('config.json', 'r', encoding='utf-8') as f:
     config = json.load(f)
 
 # Initialize loggers
@@ -27,32 +27,32 @@ try:
         table_logger = setup_logger(log_file_name, f"Logger_{source.replace('.', '_')}")
 
         try:
-            table_logger.info(f"🚀 Starting ETL for: {source} -> {target}")
+            table_logger.info("🚀 Starting ETL for: %s -> %s", source, target)
             csv_file, extracted_count = extract_from_mssql(table_config, table_logger)
             load_to_postgres(csv_file, table_config, table_logger)
 
             # Delete CSV file and log
             if os.path.exists(csv_file):
                 os.remove(csv_file)
-                table_logger.info(f"🗑️ Deleted CSV file after load: {csv_file}")
-                deleted_file_logger.info(f"Deleted: {csv_file} (Source: {source} -> Target: {target})")
+                table_logger.info("🗑️ Deleted CSV file after load: %s", csv_file)
+                deleted_file_logger.info("Deleted: %s (Source: %s -> Target: %s)", csv_file, source, target)
             else:
-                table_logger.warning(f"CSV file not found for deletion: {csv_file}")
+                table_logger.warning("CSV file not found for deletion: %s", csv_file)
 
-            table_logger.info(f"✅ Completed ETL for: {source} -> {target}")
+            table_logger.info("✅ Completed ETL for: %s -> %s", source, target)
             success_tables.append(f"{source} -> {target}")
 
-        except Exception as table_err:
-            table_logger.error(f"❌ ETL failed for: {source} -> {target}")
-            table_logger.error(f"Error: {table_err}")
+        except (FileNotFoundError, ValueError, RuntimeError) as table_err:  # Replace with specific exceptions
+            table_logger.error("❌ ETL failed for: %s -> %s", source, target)
+            table_logger.error("Error: %s", table_err)
             table_logger.error(traceback.format_exc())
             failed_tables.append(f"{source} -> {target} (ETL Failed)")
 
-except Exception as e:
-    global_logger.critical(f"🔥 Critical error in ETL process: {e}")
+except (KeyError, ValueError, OSError) as e:  # Replace with specific exceptions relevant to your code
+    global_logger.critical("🔥 Critical error in ETL process: %s", e)
     global_logger.critical(traceback.format_exc())
 
 finally:
     global_logger.info("Multi-table ETL process completed.")
-    global_logger.info(f"Tables processed successfully: {success_tables}")
-    global_logger.info(f"Tables failed: {failed_tables}")
+    global_logger.info("Tables processed successfully: %s", success_tables)
+    global_logger.info("Tables failed: %s", failed_tables)

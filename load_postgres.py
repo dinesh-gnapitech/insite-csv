@@ -2,7 +2,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 def load_to_postgres(csv_file_path, config, logger):
     PG_HOST = os.getenv('PG_HOST')
@@ -12,6 +12,7 @@ def load_to_postgres(csv_file_path, config, logger):
     PG_PASSWORD = os.getenv('PG_PASSWORD')
 
     target_table = config["target_table"]
+    print("Target DB:",PG_DATABASE)
 
     logger.info(f"Connecting to PostgreSQL for {target_table}...")
     conn = psycopg2.connect(
@@ -23,7 +24,7 @@ def load_to_postgres(csv_file_path, config, logger):
     )
     cur = conn.cursor()
 
-    with open(csv_file_path, 'r') as f:
+    with open(csv_file_path, 'r', encoding='utf-8') as f:
         cur.copy_expert(f"""
             COPY {target_table} FROM STDIN WITH CSV HEADER DELIMITER ',';
         """, f)

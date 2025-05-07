@@ -25,7 +25,7 @@ def extract_from_mssql(config, logger, chunk_size=100000):
 
     logger.info(f"Extracting data...")
     df = pd.read_sql(query, conn)
-    df.to_csv(csv_file_path, index=False)
+    df.to_csv(csv_file_path, index=False, encoding='utf-8')
     conn.close()
     logger.info(f"Saved data to CSV at {os.path.abspath(csv_file_path)}.")
 

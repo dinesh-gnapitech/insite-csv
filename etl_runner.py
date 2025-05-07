@@ -55,4 +55,6 @@ except (KeyError, ValueError, OSError) as e:  # Replace with specific exceptions
 finally:
     global_logger.info("Multi-table ETL process completed.")
     global_logger.info("Tables processed successfully: %s", success_tables)
+    if len(failed_tables) == 0:
+        failed_tables=0
     global_logger.info("Tables failed: %s", failed_tables)

@@ -1,17 +1,23 @@
 {
-    "tables": [
+    "tables": 
+    [
       {
-        "source_table": "dbo.source_table_1",
-        "target_table": "public.target_table_1",
-        "query": "SELECT * FROM dbo.source_table_1",
-        "csv_file": "data_export_1.csv"
+        "source_table": "dbo.insite_workorder_history",
+        "target_table": "data.insite_workorder_history",
+        "query": "SELECT * FROM dbo.insite_workorder_history",
+        "csv_file": "insite_workorder_history.csv"
       },
       {
-        "source_table": "dbo.source_table_2",
-        "target_table": "public.target_table_2",
-        "query": "SELECT * FROM dbo.source_table_2",
-        "csv_file": "data_export_2.csv"
+        "source_table": "dbo.inspection_insite_history",
+        "target_table": "data.inspection_insite_history",
+        "query": "SELECT * FROM dbo.inspection_insite_history",
+        "csv_file": "inspection_insite_history.csv"
+      },
+      {
+        "source_table": "dbo.inspection_insite_history_component",
+        "target_table": "data.inspection_insite_history_component",
+        "query": "SELECT * FROM dbo.inspection_insite_history_component",
+        "csv_file": "inspection_insite_history_component.csv"
       }
     ]
-  }
-  
+}

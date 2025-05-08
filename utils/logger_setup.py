@@ -1,39 +1,32 @@
 import logging
 import os
 
-def setup_logger(log_file, logger_name):
+def setup_logger(log_path, logger_name):
+    # Create logger
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.INFO)
 
+    # Avoid duplicate handlers if already added
+    if logger.handlers:
+        return logger
+
+    # Create file handler
+    fh = logging.FileHandler(log_path, mode='a', encoding='utf-8')
+    fh.setLevel(logging.INFO)
+
+    # Create console handler (optional for debugging)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+
+    # Create formatter
     formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
-    os.makedirs(os.path.dirname(log_file), exist_ok=True)
+    # Add formatter to handlers
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
 
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setFormatter(formatter)
-
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
-
-    if not logger.handlers:
-        logger.addHandler(file_handler)
-        logger.addHandler(console_handler)
+    # Add handlers to logger
+    logger.addHandler(fh)
+    logger.addHandler(ch)
 
     return logger
-
-def setup_deleted_file_logger(log_file='logs/deleted_files.log'):
-    logger = logging.getLogger('DeletedFilesLogger')
-    logger.setLevel(logging.INFO)
-
-    formatter = logging.Formatter('%(asctime)s - %(message)s')
-
-    os.makedirs(os.path.dirname(log_file), exist_ok=True)
-
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setFormatter(formatter)
-
-    if not logger.handlers:
-        logger.addHandler(file_handler)
-
-    return logger
-

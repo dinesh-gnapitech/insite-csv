@@ -1,2 +1,0 @@
-# Windows
-venv\Scripts\activate

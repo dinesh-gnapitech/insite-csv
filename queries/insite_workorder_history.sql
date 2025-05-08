@@ -1,12 +1,4 @@
--- ============================================
--- Database Setup for Pre-load Operations
--- ============================================
-
--------------------------------------------------------------------------------------------------------------------------------
--- Setup insite_workorder_history table for data loading
--------------------------------------------------------------------------------------------------------------------------------
-
-SELECT DISTINCT
+SELECT 
     '{' + CAST(w.ID AS VARCHAR(266)) + '}' AS ID,
     w.WO_NAME,
     w.WO_NUMBER,
@@ -29,13 +21,14 @@ SELECT DISTINCT
         ELSE 'NULL'
     END AS IS_DELETED,
     w.CLIENT_ID,
-  
+    af.AMBIT_NAME,
     w.WO_TAGS,
     it.TYPE AS INSPECT_TYPE,
     ip.INSPECTION_PROGRAM_NAME
-INTO insite_workorder_history
 FROM 
     WORKORDER w
 LEFT JOIN INSPECTTYPE it ON w.INSPECT_TYPE_ID = it.ID
-LEFT JOIN INSPECTIONPROGRAM ip ON w.INSPECTION_PROGRAM_ID = ip.ID;
-
+LEFT JOIN INSPECTIONPROGRAM ip ON w.INSPECTION_PROGRAM_ID = ip.ID
+LEFT JOIN AMBIT_FEATURE af ON w.AMBIT_ID = af.AMBIT_ID;
+-- This query retrieves work order history details from the WORKORDER table and joins with INSPECTTYPE, INSPECTIONPROGRAM, and AMBIT_FEATURE tables to get additional information.
+-- It selects various fields including work order name, number, status, type, vendor, assigned user, and inspection program details.

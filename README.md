@@ -5,7 +5,7 @@ pip install pandas pyodbc python-dotenv
 
 # Start the pipeline
 Run below command:
-python etl_runner.py
+python etl_runner.py (It will take 10 mins to exctract the data)
 
 # Read config
 etl_runner.py reads config.json to get table details.

@@ -4,19 +4,19 @@
         "source_table": "dbo.insite_workorder_history",
         "query_file": "queries/insite_workorder_history.sql",
         "datetime_columns": ["wo_status_date", "assigned_date", "due_date", "created_date", "modified_date"],
-        "csv_chunk_size": 100000
+        "csv_chunk_size": 10000
       },
       {
         "source_table": "dbo.inspection_insite_history",
         "query_file": "queries/inspection_insite_history.sql",
         "datetime_columns": ["inspection_date"],
-        "csv_chunk_size": 100000
+        "csv_chunk_size": 10000
       },
       {
         "source_table": "dbo.inspection_insite_history_component",
         "query_file": "queries/inspection_insite_history_component.sql",
         "datetime_columns": [],
-        "csv_chunk_size": 100000
+        "csv_chunk_size": 10000
       }
     ]
   }

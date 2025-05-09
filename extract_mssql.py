@@ -35,7 +35,7 @@ def extract_from_mssql(config, logger):
         logger.info("[INFO] Loaded query directly from config")
 
     datetime_cols = [col.lower() for col in config.get("datetime_columns", [])]
-    chunk_size = config.get("csv_chunk_size", 100000)
+    chunk_size = config.get("csv_chunk_size", 10000)
 
     # Start chunked read
     conn = pyodbc.connect(conn_str)
